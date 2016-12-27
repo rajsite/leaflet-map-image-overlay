@@ -85,3 +85,4 @@ $RECYCLE.BIN/
 *.lnk
 
 bower_components
+.bowerrc
