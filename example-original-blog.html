@@ -1,0 +1,52 @@
+
+<!-- from https://gist.github.com/longhotsummer/ba9c96bb2abb304e4095ce00df17ae2f -->
+<html>
+  <!-- See also: http://kempe.net/blog/2014/06/14/leaflet-pan-zoom-image.html -->
+  <head>
+
+    <script type="text/javascript" src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="bower_components/leaflet-map/leaflet-map.html">
+
+    <style>
+    #image-map {
+      width: 100%;
+      height: 300px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+    </style>
+  </head>
+  <body>
+
+    <div id="image-map"></div>
+    
+    <script>
+      HTMLImports.whenReady(function () {
+        // Using leaflet.js to pan and zoom a big image.
+        // See also: http://kempe.net/blog/2014/06/14/leaflet-pan-zoom-image.html
+        // create the slippy map
+        var map = L.map('image-map', {
+          minZoom: 1,
+          maxZoom: 4,
+          center: [0, 0],
+          zoom: 1,
+          crs: L.CRS.Simple
+        });
+        // dimensions of the image
+        var w = 2000,
+            h = 1500,
+            url = 'http://kempe.net/images/newspaper-big.jpg';
+        // calculate the edges of the image, in coordinate space
+        var southWest = map.unproject([0, h], map.getMaxZoom()-1);
+        var northEast = map.unproject([w, 0], map.getMaxZoom()-1);
+        var bounds = new L.LatLngBounds(southWest, northEast);
+        // add the image overlay, 
+        // so that it covers the entire map
+        L.imageOverlay(url, bounds).addTo(map);
+        // tell leaflet that the map is exactly as big as the image
+        map.setMaxBounds(bounds);
+      });
+    </script>
+
+  </body>
+</html>

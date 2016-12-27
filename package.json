@@ -1,0 +1,15 @@
+{
+  "name": "leaflet-map-image-overlay",
+  "version": "1.0.0",
+  "description": "An L.imageOverlay layer for the leaflet-map webcomponent",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Milan Raj (@rajsite)",
+  "license": "MIT",
+  "devDependencies": {
+    "bower": "^1.8.0"
+  },
+  "private": true
+}

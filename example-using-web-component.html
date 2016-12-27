@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>leaflet-map web-component demo</title>
+		<script type="text/javascript" src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+
+		<link rel="import" href="bower_components/leaflet-map/leaflet-map.html">
+		<link rel="import" href="leaflet-image-overlay.html">
+
+		<style type="text/css">
+			body {
+				height: 100%;
+				margin: 0;
+				font-family: sans-serif;
+			}	
+            leaflet-map {
+                width: 500px;
+                height: 500px;
+            }
+        </style>
+
+        <leaflet-map min-zoom="1" max-zoom="4" latitude="0" longitude="0" zoom="1">
+			<leaflet-image-overlay url="http://kempe.net/images/newspaper-big.jpg" height="1500" width="2000" make-max-bounds></leaflet-image-overlay>
+        </leaflet-map>
+
+	</body>
+</html>

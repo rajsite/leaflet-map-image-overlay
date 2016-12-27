@@ -1,0 +1,98 @@
+<link rel="import" href="bower_components/leaflet-map/leaflet-layer.html">
+
+<dom-module id="leaflet-image-overlay">
+	<style>
+		:host {display: none;}
+	</style>
+	<template>
+	</template>
+</dom-module>
+
+<script>
+"use strict";
+
+Polymer({
+	is: 'leaflet-image-overlay',
+	behaviors: [leafletMap.LeafletILayer],
+	properties: {
+		url: {
+			type: String,
+			value: "http://imgs.xkcd.com/comics/online_communities.png",
+			observer: '_urlChanged'
+		},
+
+		height: {
+			type: Number,
+			value: 968
+		},
+
+		width: {
+			type: Number,
+			value: 1024
+		},
+		
+		container: {
+			type: Object,
+			observer: '_containerChanged'
+		},
+
+        opacity: {
+			type: Number,
+			value: 1.0,
+			observer: '_opacityChanged'
+		},
+
+        attribution: {
+			type: String,
+			value: ""
+		},
+
+		makeMaxBounds: {
+			type: Boolean,
+			value: false
+		}
+	},
+	
+	_containerChanged: function() {
+		var w, h, southWest, northEast, bounds;
+
+		if (this.container) {
+			// Based on example from: http://kempe.net/blog/2014/06/14/leaflet-pan-zoom-image.html
+			// calculate the edges of the image, in coordinate space
+			h = this.height;
+			w = this.width;
+			southWest = this.container.unproject([0, h], this.container.getMaxZoom()-1);
+			northEast = this.container.unproject([w, 0], this.container.getMaxZoom()-1);
+			bounds = new L.LatLngBounds(southWest, northEast);
+
+			var layer = L.imageOverlay(this.url, bounds, {
+				attribution: Polymer.dom(this).innerHTML + this.attribution,
+				opacity: this.opacity
+			});
+
+			this.layer = layer;
+			this.layer.addTo(this.container);
+
+			if (this.makeMaxBounds) {
+				this.container.setMaxBounds(bounds);
+			}
+		}
+	},
+	
+	_urlChanged: function() {
+		if (this.layer) {
+			this.layer.setUrl(this.url);
+		}
+	},
+    _opacityChanged: function() {
+		if (this.layer) {
+			this.layer.setOpacity(this.opacity);
+		}
+	},
+	detached: function() {
+		if (this.container && this.layer) {
+			this.container.removeLayer(this.layer);
+		}
+	}
+});
+</script>
