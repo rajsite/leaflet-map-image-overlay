@@ -1,6 +1,6 @@
 {
   "name": "leaflet-map-image-overlay",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "An L.imageOverlay layer for the leaflet-map webcomponent",
   "main": "index.js",
   "scripts": {
