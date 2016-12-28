@@ -23,12 +23,14 @@ Polymer({
 
 		height: {
 			type: Number,
-			value: 968
+			value: 968,
+			observer: '_boundsChange'
 		},
 
 		width: {
 			type: Number,
-			value: 1024
+			value: 1024,
+			observer: '_boundsChange'
 		},
 		
 		container: {
@@ -47,16 +49,27 @@ Polymer({
 			value: ""
 		},
 
+		fitMapToBounds: {
+			type: Boolean,
+			value: false
+		},
+
+		// May cause errors when leaflet-map added and removed repeatedly,
+		// see: https://github.com/rajsite/leaflet-map-image-overlay/issues/1 
 		makeMaxBounds: {
 			type: Boolean,
 			value: false
 		}
 	},
-	
+
 	_containerChanged: function() {
 		var w, h, southWest, northEast, bounds;
 
 		if (this.container) {
+			if (this.layer) {
+				this.container.removeLayer(this.layer);
+			}
+
 			// Based on example from: http://kempe.net/blog/2014/06/14/leaflet-pan-zoom-image.html
 			// calculate the edges of the image, in coordinate space
 			h = this.height;
@@ -73,12 +86,18 @@ Polymer({
 			this.layer = layer;
 			this.layer.addTo(this.container);
 
+			if (this.fitMapToBounds) {
+				this.container.fitBounds(bounds);
+			}
 			if (this.makeMaxBounds) {
 				this.container.setMaxBounds(bounds);
 			}
 		}
 	},
-	
+
+	_boundsChange: function () {
+		this._containerChanged();
+	},
 	_urlChanged: function() {
 		if (this.layer) {
 			this.layer.setUrl(this.url);
