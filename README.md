@@ -1,4 +1,11 @@
 # leaflet-map-image-overlay
+
+## Status
+
+This project is archived and no longer maintained. Contact Milan Raj (@rajsite) for more info.
+
+## Overview
+
 An interm attempt at adding support for the imageOverlay layer type to the [leaflet-map](https://github.com/leaflet-extras/leaflet-map/) project.
 
 The goal is to allow for using the Leaflet webcomponent as a UI for large images following the example in the [Using leaflet.js to pan and zoom a big image](http://kempe.net/blog/2014/06/14/leaflet-pan-zoom-image.html) blog post.
